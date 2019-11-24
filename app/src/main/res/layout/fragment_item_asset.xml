@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+    android:paddingTop="7dp"
+    tools:context=".ItemAssetFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/test"
+        android:elevation="8dp">
+        <ImageView
+            android:id="@+id/assetImage"
+            android:layout_width="120dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/tiviss"
+            android:scaleType="centerCrop"
+            android:layout_margin="5dp"/>
+        <TextView
+            android:id="@+id/assetName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tivi Samsung"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_toRightOf="@+id/assetImage"/>
+        <TextView
+            android:id="@+id/assetType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tivi"
+            android:textSize="16sp"
+            android:layout_below="@+id/assetName"
+            android:layout_toRightOf="@+id/assetImage"/>
+        <TextView
+            android:id="@+id/assetLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Room 216"
+            android:textSize="16sp"
+            android:layout_below="@+id/assetType"
+            android:layout_toRightOf="@+id/assetImage"/>
+        <Button
+            android:id="@+id/assetStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Acctive"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:background="#46FF00"
+            android:layout_marginRight="5dp"/>
+    </RelativeLayout>
+
+</FrameLayout>

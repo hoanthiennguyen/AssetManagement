@@ -4,6 +4,7 @@ package swd.project.assetmanagement;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,12 +40,20 @@ public class HomeFragment extends Fragment implements AssetView {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-        listViewAsset = view.findViewById(R.id.listViewAsset);
-        assetPresenter = new AssetPresenter(this);
-        assetList = new ArrayList<>();
-        assetListViewAdapter = new DepartmentListViewAdapter(assetList);
-        listViewAsset.setAdapter(assetListViewAdapter);
-        assetPresenter.requestDataFromServer();
+//        listViewAsset = view.findViewById(R.id.listViewAsset);
+////        assetPresenter = new AssetPresenter(this);
+////        assetList = new ArrayList<>();
+////        assetListViewAdapter = new DepartmentListViewAdapter(assetList);
+////        listViewAsset.setAdapter(assetListViewAdapter);
+////        assetPresenter.requestDataFromServer();
+        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+        for (Fragment fragment : getChildFragmentManager().getFragments()) {
+            transaction.remove(fragment);
+        }
+        transaction.add(R.id.assetContainer, new ItemAssetFragment(R.drawable.tiviss, "Tivi Samsung", "Tivi", "Room 123", "Active"));
+        transaction.add(R.id.assetContainer, new ItemAssetFragment(R.drawable.tiviss, "Tivi Sony", "Tivi", "Room 123", "Prepair"));
+        transaction.add(R.id.assetContainer, new ItemAssetFragment(R.drawable.tiviss, "Tivi Panasonic", "Tivi", "Room 123", "Broken"));
+        transaction.commit();
         return view;
     }
 

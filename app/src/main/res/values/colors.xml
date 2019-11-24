@@ -3,4 +3,8 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="active">#46FF00</color>
+    <color name="prepair">#FFAA00</color>
+    <color name="broken">#FF0000</color>
+    <color name="test">#FFFFFF</color>
 </resources>
