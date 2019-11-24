@@ -5,6 +5,9 @@ public class Department {
     String name;
     String description;
 
+    public Department() {
+    }
+
     public Department(Long id, String name, String description) {
         this.id = id;
         this.name = name;

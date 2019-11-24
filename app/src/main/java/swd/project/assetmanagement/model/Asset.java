@@ -5,12 +5,11 @@ public class Asset {
     String name;
     Location location;
     AssetType assetType;
-
-    public Asset(Long id, String name, Location location, AssetType assetType) {
-        this.id = id;
-        this.name = name;
-        this.location = location;
-        this.assetType = assetType;
+    Employee employee;
+    String fromDate;
+    String status;
+    Long currentHistoryId;
+    public Asset() {
     }
 
     public Long getId() {
@@ -43,5 +42,37 @@ public class Asset {
 
     public void setAssetType(AssetType assetType) {
         this.assetType = assetType;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
+    public String getFromDate() {
+        return fromDate;
+    }
+
+    public void setFromDate(String fromDate) {
+        this.fromDate = fromDate;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Long getCurrentHistoryId() {
+        return currentHistoryId;
+    }
+
+    public void setCurrentHistoryId(Long currentHistoryId) {
+        this.currentHistoryId = currentHistoryId;
     }
 }

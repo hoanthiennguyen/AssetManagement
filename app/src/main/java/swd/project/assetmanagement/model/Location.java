@@ -6,6 +6,9 @@ public class Location {
     String floor;
     String room;
 
+    public Location() {
+    }
+
     public Location(Long id, String block, String floor, String room) {
         this.id = id;
         this.block = block;
