@@ -39,24 +39,6 @@ public class ItemAssetFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_item_asset, container, false);
-        ImageView assetImage = view.findViewById(R.id.assetImage);
-        TextView assetname = view.findViewById(R.id.assetName);
-        TextView assetType = view.findViewById(R.id.assetType);
-        TextView assetLocation = view.findViewById(R.id.assetLocation);
-        Button assetStatus = view.findViewById(R.id.assetStatus);
-
-        assetImage.setImageResource(image);
-        assetname.setText(name);
-        assetType.setText(type);
-        assetLocation.setText(location);
-        assetStatus.setText(status);
-        if(status == "Active") {
-            assetStatus.setBackgroundColor(Color.GREEN);
-        }else if(status == "Prepair") {
-            assetStatus.setBackgroundColor(Color.YELLOW);
-        }else if(status == "Broken") {
-            assetStatus.setBackgroundColor(Color.RED);
-        }
         return view;
     }
 

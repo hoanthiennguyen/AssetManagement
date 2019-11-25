@@ -24,16 +24,12 @@
             android:text="Filter"/>
     </LinearLayout>
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <LinearLayout
-            android:id="@+id/assetContainer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
 
-        </LinearLayout>
-    </ScrollView>
+            <ListView
+                android:id="@+id/assetContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </ListView>
 
 </LinearLayout>
