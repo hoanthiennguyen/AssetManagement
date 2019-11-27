@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="120dp"
-    android:paddingTop="7dp">
-
-    <!-- TODO: Update blank fragment layout -->
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".AssetDetailsActivity">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="150dp"
         android:background="@color/test"
         android:elevation="8dp">
         <ImageView
             android:id="@+id/assetImage"
             android:layout_width="120dp"
             android:layout_height="match_parent"
-            android:src="@drawable/tiviss"
             android:scaleType="centerCrop"
             android:layout_margin="5dp"/>
         <TextView
@@ -42,16 +41,40 @@
             android:textSize="16sp"
             android:layout_below="@+id/assetType"
             android:layout_toRightOf="@+id/assetImage"/>
-        <TextView
-            android:id="@+id/assetStatus"
+
+        <LinearLayout
+            android:layout_below="@id/assetLocation"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Active"
             android:layout_alignParentRight="true"
-            android:gravity="center"
-            android:layout_centerVertical="true"
-            android:background="#46FF00"
-            android:layout_marginRight="5dp"/>
+            android:layout_alignLeft="@id/assetLocation"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_marginLeft="20dp"
+                android:id="@+id/assetStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Active"
+                android:gravity="center"
+                android:layout_centerVertical="true"
+                android:background="#46FF00"
+                android:layout_marginRight="5dp"/>
+            <Spinner
+                android:id="@+id/spinnerChangeStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
     </RelativeLayout>
 
-</FrameLayout>
+    <Button
+        android:onClick="onClickToggleHistory"
+        android:text="Show History"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <ListView
+        android:visibility="gone"
+        android:id="@+id/stageListView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

@@ -1,22 +1,18 @@
 package swd.project.assetmanagement.model;
 
-public class Asset {
-    Long id;
-    String name;
-    Location location;
-    AssetType assetType;
-    Employee employee;
-    String fromDate;
-    String status;
-    Long currentHistoryId;
-    public Asset() {
-    }
+import java.io.Serializable;
 
-    public Long getId() {
+public class Asset implements Serializable {
+    int id;
+    String name;
+    AssetType assetType;
+    Stage currentStage;
+
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -28,14 +24,6 @@ public class Asset {
         this.name = name;
     }
 
-    public Location getLocation() {
-        return location;
-    }
-
-    public void setLocation(Location location) {
-        this.location = location;
-    }
-
     public AssetType getAssetType() {
         return assetType;
     }
@@ -44,35 +32,16 @@ public class Asset {
         this.assetType = assetType;
     }
 
-    public Employee getEmployee() {
-        return employee;
+    public Stage getCurrentStage() {
+        return currentStage;
     }
 
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
+    public void setCurrentStage(Stage currentStage) {
+        this.currentStage = currentStage;
     }
 
-    public String getFromDate() {
-        return fromDate;
+    public Asset() {
     }
 
-    public void setFromDate(String fromDate) {
-        this.fromDate = fromDate;
-    }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public Long getCurrentHistoryId() {
-        return currentHistoryId;
-    }
-
-    public void setCurrentHistoryId(Long currentHistoryId) {
-        this.currentHistoryId = currentHistoryId;
-    }
 }

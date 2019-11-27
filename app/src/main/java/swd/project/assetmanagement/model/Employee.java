@@ -1,6 +1,8 @@
 package swd.project.assetmanagement.model;
 
-public class Employee {
+import java.io.Serializable;
+
+public class Employee implements Serializable {
     Long id;
     String username,password,fullname,email;
 

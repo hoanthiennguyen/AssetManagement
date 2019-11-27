@@ -1,4 +1,4 @@
-package swd.project.assetmanagement.api_util;
+package swd.project.assetmanagement.dto;
 
 import java.util.List;
 

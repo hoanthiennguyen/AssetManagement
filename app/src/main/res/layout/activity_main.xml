@@ -6,14 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainActivity">
-    <Button
-        android:drawableLeft="@drawable/ic_photo_camera_black_24dp"
-        android:text="  Scan QR"
-        android:onClick="onClickScanQR"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="140dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayoutMainMenu"

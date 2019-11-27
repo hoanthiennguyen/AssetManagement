@@ -5,31 +5,30 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import swd.project.assetmanagement.api_util.CallBackData;
-import swd.project.assetmanagement.api_util.ResponseDTO;
-import swd.project.assetmanagement.api_util.ResponseListAsset;
+import swd.project.assetmanagement.api_util.CallbackData;
+import swd.project.assetmanagement.dto.ResponseDTO;
+import swd.project.assetmanagement.dto.ResponseListAsset;
 import swd.project.assetmanagement.api_util.RetrofitConfiguration;
+import swd.project.assetmanagement.dto.ResponseStatus;
 import swd.project.assetmanagement.model.Asset;
 
 public class AssetRepositoryImpl implements AssetRepository{
+    AssetService assetService = RetrofitConfiguration.getRetrofitAdapter().create(AssetService.class);
     @Override
-    public void getAllAsset(final CallBackData<List<Asset>> callBack) {
+    public void fetchListAsset(final CallbackData<List<Asset>> callBack) {
 
-        Call<ResponseListAsset> call = RetrofitConfiguration.getRetrofitAdapter().create(AssetService.class).getAllAsset();
+        Call<ResponseListAsset> call = assetService.getAllAsset();
         call.enqueue(new Callback<ResponseListAsset>() {
             @Override
             public void onResponse(Call<ResponseListAsset> call, Response<ResponseListAsset> response) {
-                try{
-                    ResponseDTO<List<Asset>> responseDTO = response.body();
-                    if(responseDTO.getStatus().equals("OK")){
-                        List<Asset> list = response.body().getPayload();
+                    ResponseListAsset dto = response.body();
+                    if(dto.getStatus().equals(ResponseStatus.OK.toString())){
+                        List<Asset> list = dto.getPayload();
                         callBack.onSuccess(list);
-
                     }
-                }
-                catch (Exception e){
-                    callBack.onFail(e.getMessage());
-                }
+                    else {
+                        callBack.onFail(dto.getStatus());
+                    }
 
             }
 
@@ -41,7 +40,30 @@ public class AssetRepositoryImpl implements AssetRepository{
     }
 
     @Override
-    public void updateAsset(CallBackData<Asset> callBack) {
+    public void updateAsset(CallbackData<Asset> callBack) {
 
+    }
+
+    @Override
+    public void fetchAssetDetails(int assetId, final CallbackData<Asset> callback) {
+        Call<ResponseDTO<Asset>> call = assetService.getAsset(assetId);
+        call.enqueue(new Callback<ResponseDTO<Asset>>() {
+            @Override
+            public void onResponse(Call<ResponseDTO<Asset>> call, Response<ResponseDTO<Asset>> response) {
+                ResponseDTO<Asset> dto = response.body();
+                if(dto.getStatus().equals(ResponseStatus.OK.toString())){
+                    Asset asset = dto.getPayload();
+                    callback.onSuccess(asset);
+                }
+                else {
+                    callback.onFail(dto.getStatus());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseDTO<Asset>> call, Throwable t) {
+
+            }
+        });
     }
 }

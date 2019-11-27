@@ -1,6 +1,8 @@
 package swd.project.assetmanagement.model;
 
-public class History {
+import java.io.Serializable;
+
+public class Stage implements Serializable {
     Long id;
     String fromDate;
     String toDate;
@@ -11,7 +13,7 @@ public class History {
     String status;
     String previousStatus;
 
-    public History() {
+    public Stage() {
     }
 
     public Long getId() {

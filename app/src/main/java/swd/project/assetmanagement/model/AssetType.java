@@ -1,6 +1,8 @@
 package swd.project.assetmanagement.model;
 
-public class AssetType {
+import java.io.Serializable;
+
+public class AssetType implements Serializable {
     Long id;
     String name;
     String description;

@@ -14,6 +14,7 @@ import com.google.android.material.tabs.TabLayout;
 import in.mrasif.libs.easyqr.EasyQR;
 import in.mrasif.libs.easyqr.QRScanner;
 import swd.project.assetmanagement.adapter.ViewPagerAdapter;
+import swd.project.assetmanagement.api_util.TokenManagement;
 
 public class MainActivity extends AppCompatActivity {
     TabLayout tabLayoutMainMenu;
@@ -30,14 +31,13 @@ public class MainActivity extends AppCompatActivity {
 
         viewPagerMainContent.setAdapter(viewPagerAdapter);
         tabLayoutMainMenu.setupWithViewPager(viewPagerMainContent);
+        TokenManagement.loadAccessToken(this);
 
     }
 
     public void onClickScanQR(View view) {
-//        Intent intent = new Intent(this, QRScanner.class);
-//        startActivityForResult(intent, EasyQR.QR_SCANNER_REQUEST);
-        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-        startActivity(intent);
+        Intent intent = new Intent(this, QRScanner.class);
+        startActivityForResult(intent, EasyQR.QR_SCANNER_REQUEST);
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -45,8 +45,16 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == EasyQR.QR_SCANNER_REQUEST) {
 
             if (resultCode == RESULT_OK) {
-                String contents = data.getStringExtra(EasyQR.DATA);
-                Toast.makeText(this, "text: " +contents, Toast.LENGTH_SHORT).show();
+
+                try{
+                    String assetId = data.getStringExtra(EasyQR.DATA);
+                    Intent intent = new Intent(this,AssetDetailsActivity.class);
+                    intent.putExtra("assetId",Integer.parseInt(assetId));
+                    startActivity(intent);
+                }
+                catch (Exception e){
+                    Toast.makeText(this, "Invalid QR", Toast.LENGTH_SHORT).show();
+                }
             }
             if(resultCode == RESULT_CANCELED){
                 //handle cancel

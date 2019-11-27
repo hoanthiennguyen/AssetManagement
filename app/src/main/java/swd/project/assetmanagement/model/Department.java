@@ -1,6 +1,8 @@
 package swd.project.assetmanagement.model;
 
-public class Department {
+import java.io.Serializable;
+
+public class Department implements Serializable {
     Long id;
     String name;
     String description;

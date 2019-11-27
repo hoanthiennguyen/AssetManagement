@@ -1,6 +1,10 @@
 package swd.project.assetmanagement.model;
 
-public class Location {
+import androidx.annotation.NonNull;
+
+import java.io.Serializable;
+
+public class Location implements Serializable {
     Long id;
     String block;
     String floor;
@@ -46,5 +50,11 @@ public class Location {
 
     public void setRoom(String room) {
         this.room = room;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "Block: " + block + ", room: " + room;
     }
 }

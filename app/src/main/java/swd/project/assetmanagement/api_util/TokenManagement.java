@@ -19,11 +19,14 @@ public class TokenManagement {
         editor.remove("ACCESSTOKEN");
         editor.apply();
     }
-    public static String getAccessToken(@NonNull Context context) {
+    public static String loadAccessToken(@NonNull Context context) {
         if(token == null){
             SharedPreferences sharedPreferences = context.getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
             token = sharedPreferences.getString("ACCESSTOKEN", null);
         }
+        return token;
+    }
+    public static String getToken(){
         return token;
     }
 }
