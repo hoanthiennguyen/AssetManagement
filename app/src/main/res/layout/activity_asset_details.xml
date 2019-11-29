@@ -48,16 +48,6 @@
             android:layout_alignParentRight="true"
             android:layout_alignLeft="@id/assetLocation"
             android:layout_height="wrap_content">
-            <TextView
-                android:layout_marginLeft="20dp"
-                android:id="@+id/assetStatus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Active"
-                android:gravity="center"
-                android:layout_centerVertical="true"
-                android:background="#46FF00"
-                android:layout_marginRight="5dp"/>
             <Spinner
                 android:id="@+id/spinnerChangeStatus"
                 android:layout_width="wrap_content"
@@ -76,5 +66,22 @@
         android:id="@+id/stageListView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+    <LinearLayout
+        android:layout_weight="1"
+        android:gravity="center|bottom"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+        <Button
+            android:id="@+id/btnSave"
+            android:text="Save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:layout_marginLeft="100dp"
+            android:id="@+id/btnCancel"
+            android:text="Cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
 
 </LinearLayout>
