@@ -28,4 +28,17 @@ public class StageListPresenter {
             }
         });
     }
+    public void addNewStage(int assetId, Stage newStage){
+        stageRepository.addNewStage(assetId, newStage, new CallbackData<Stage>() {
+            @Override
+            public void onSuccess(Stage stage) {
+                stageListView.onSuccessAddNewStage(stage);
+            }
+
+            @Override
+            public void onFail(String msg) {
+                stageListView.onFailAddNewStage(msg);
+            }
+        });
+    }
 }

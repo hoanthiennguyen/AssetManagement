@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import swd.project.assetmanagement.adapter.StageListViewAdapter;
@@ -28,7 +29,7 @@ import swd.project.assetmanagement.view.AssetDetailsView;
 import swd.project.assetmanagement.view.LoadingView;
 import swd.project.assetmanagement.view.StageListView;
 
-public class AssetDetailsActivity extends AppCompatActivity implements LoadingView, AssetDetailsView, StageListView {
+public class AssetDetailsActivity extends AppCompatActivity implements LoadingView, AssetDetailsView, StageListView, PopupLocationDialog.HandleData {
     AssetDetailsPresenter assetDetailsPresenter;
     Asset asset;
     List<Stage> stageList;
@@ -89,6 +90,29 @@ public class AssetDetailsActivity extends AppCompatActivity implements LoadingVi
         stageListPresenter.fetchListStage(asset.getId());
 
     }
+    public void onClickToggleHistory(View view){
+
+        if(stageListView.getVisibility() == View.GONE){
+            stageListView.setVisibility(View.VISIBLE);
+            Button btn = (Button) view;
+            btn.setText("Hide History");
+        }
+        else {
+            stageListView.setVisibility(View.GONE);
+            Button btn = (Button) view;
+            btn.setText("Show History");
+        }
+    }
+    public void onClickCancel(View view){
+        finish();
+    }
+    public void onClickSave(View view){
+        stageListPresenter.addNewStage(asset.getId(), currentStage);
+    }
+    public void onClickChangeLocation(View view){
+        PopupLocationDialog locationDialog = new PopupLocationDialog(this);
+        locationDialog.show(getSupportFragmentManager(),"ChangeLocation");
+    }
 
     @Override
     public void getAssetDetailsSuccess(Asset asset) {
@@ -110,22 +134,11 @@ public class AssetDetailsActivity extends AppCompatActivity implements LoadingVi
     public void hideProgress() {
 
     }
-    public void onClickToggleHistory(View view){
 
-        if(stageListView.getVisibility() == View.GONE){
-            stageListView.setVisibility(View.VISIBLE);
-            Button btn = (Button) view;
-            btn.setText("Hide History");
-        }
-        else {
-            stageListView.setVisibility(View.GONE);
-            Button btn = (Button) view;
-            btn.setText("Show History");
-        }
-    }
 
     @Override
     public void onSuccessFetchStageList(List<Stage> stages) {
+        Collections.reverse(stages);
         stageList.addAll(stages);
         stageListViewAdapter.notifyDataSetChanged();
     }
@@ -133,5 +146,23 @@ public class AssetDetailsActivity extends AppCompatActivity implements LoadingVi
     @Override
     public void onFailFetchStageList(String str) {
         Toast.makeText(this, str, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onSuccessAddNewStage(Stage stage) {
+        stageList.add(0,stage);
+        stageListViewAdapter.notifyDataSetChanged();
+        Toast.makeText(this, "Current stage has been updated", Toast.LENGTH_SHORT).show();
+        finish();
+    }
+
+    @Override
+    public void onFailAddNewStage(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void processData(String block, String floor, String room) {
+        Toast.makeText(this, block +", " +  floor + ", " + room, Toast.LENGTH_SHORT).show();
     }
 }
