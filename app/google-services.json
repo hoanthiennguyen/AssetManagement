@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "948316202576",
+    "firebase_url": "https://assetmanagement-c0e54.firebaseio.com",
+    "project_id": "assetmanagement-c0e54",
+    "storage_bucket": "assetmanagement-c0e54.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:948316202576:android:a66b587c1820393efdd355",
+        "android_client_info": {
+          "package_name": "swd.project.assetmanagement"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "948316202576-rfdpesbeg3k9reb6fmrsqhidst7r2loq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "swd.project.assetmanagement",
+            "certificate_hash": "d42eb098bd6da971295512fa8b49a7fb878821bd"
+          }
+        },
+        {
+          "client_id": "948316202576-u0iphar0f729eeakvh3cdjgcts3i1epm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCBKDmc4fxdfEGQe9Gy5X1cfqSeRYXoQCs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "948316202576-u0iphar0f729eeakvh3cdjgcts3i1epm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
