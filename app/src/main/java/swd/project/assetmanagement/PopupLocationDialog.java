@@ -12,10 +12,17 @@ import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatDialogFragment;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import swd.project.assetmanagement.model.Location;
+
 public class PopupLocationDialog extends AppCompatDialogFragment {
     private HandleData handleData;
     Spinner spinnerBlock, spinnerFloor,spinnerRoom;
     String block,floor,room;
+    Location selectedLocation;
+    private List<Location> locations;
 
     public PopupLocationDialog(HandleData handleData) {
         this.handleData = handleData;
@@ -64,7 +71,7 @@ public class PopupLocationDialog extends AppCompatDialogFragment {
         spinnerRoom.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                room = parent.getItemAtPosition(position).toString();
+                selectedLocation =(Location) parent.getItemAtPosition(position);
             }
 
             @Override
@@ -77,7 +84,7 @@ public class PopupLocationDialog extends AppCompatDialogFragment {
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        handleData.processData(block,floor,room);
+                        handleData.processData(selectedLocation);
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -89,6 +96,6 @@ public class PopupLocationDialog extends AppCompatDialogFragment {
         return builder.create();
     }
     public interface HandleData{
-        void processData(String block, String floor, String room);
+        void processData(Location location);
     }
 }

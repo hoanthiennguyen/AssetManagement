@@ -21,11 +21,16 @@ public class StageRepositoryImpl implements StageRepository{
             @Override
             public void onResponse(Call<ResponseListStage> call, Response<ResponseListStage> response) {
                 ResponseListStage dto = response.body();
-                if(dto.getStatus().equals(ResponseStatus.OK.toString())){
+                if(dto != null && dto.getStatus().equals(ResponseStatus.OK.toString())){
                     callback.onSuccess(dto.getPayload());
                 }
-                else
-                    callback.onFail(dto.getStatus());
+                else{
+                    if(dto != null)
+                        callback.onFail(dto.getStatus());
+                    else
+                        callback.onFail("Internal server error");
+                }
+
             }
 
             @Override

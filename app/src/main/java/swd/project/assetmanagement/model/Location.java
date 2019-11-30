@@ -20,6 +20,12 @@ public class Location implements Serializable {
         this.room = room;
     }
 
+    public Location(String block, String floor, String room) {
+        this.block = block;
+        this.floor = floor;
+        this.room = room;
+    }
+
     public Long getId() {
         return id;
     }

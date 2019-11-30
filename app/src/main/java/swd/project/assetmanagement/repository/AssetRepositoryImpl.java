@@ -22,12 +22,15 @@ public class AssetRepositoryImpl implements AssetRepository{
             @Override
             public void onResponse(Call<ResponseListAsset> call, Response<ResponseListAsset> response) {
                     ResponseListAsset dto = response.body();
-                    if(dto.getStatus().equals(ResponseStatus.OK.toString())){
+                    if(dto != null && dto.getStatus().equals(ResponseStatus.OK.toString())){
                         List<Asset> list = dto.getPayload();
                         callBack.onSuccess(list);
                     }
-                    else {
-                        callBack.onFail(dto.getStatus());
+                    else{
+                        if(dto != null)
+                            callBack.onFail(dto.getStatus());
+                        else
+                            callBack.onFail("Internal server error");
                     }
 
             }

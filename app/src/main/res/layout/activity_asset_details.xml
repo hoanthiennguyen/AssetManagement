@@ -6,7 +6,25 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".AssetDetailsActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:onClick="onClickBackToHome"
+            android:layout_marginLeft="10dp"
+            android:drawableLeft="@drawable/ic_arrow_back_black_24dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"/>
+        <TextView
+            android:gravity="center"
+            android:textSize="24sp"
+            android:text="Asset Details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
     <RelativeLayout
+        android:paddingTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:background="@color/test"
@@ -75,15 +93,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
     <ListView
-        android:visibility="gone"
+        android:layout_weight="4"
+        android:visibility="invisible"
         android:id="@+id/stageListView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="0dp"/>
     <LinearLayout
-        android:layout_weight="1"
-        android:gravity="center|bottom"
+        android:gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="0dp">
+        android:layout_height="wrap_content">
         <Button
             android:id="@+id/btnSave"
             android:onClick="onClickSave"

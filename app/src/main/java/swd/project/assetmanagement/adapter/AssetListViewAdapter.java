@@ -48,12 +48,14 @@ public class AssetListViewAdapter extends BaseAdapter {
         TextView assetType = view.findViewById(R.id.assetType);
         TextView assetLocation = view.findViewById(R.id.assetLocation);
         TextView assetStatus = view.findViewById(R.id.assetStatus);
+        assetType.setText(asset.getAssetType() != null ? asset.getAssetType().getName() : "Unassigned");
+        assetName.setText(asset.getName());
         Stage currentStage = asset.getCurrentStage();
         assetImage.setImageResource(R.drawable.ic_tv_black_24dp);
         assetStatus.setText(currentStage.getStatus());
-        assetName.setText(asset.getName());
-        assetLocation.setText(currentStage.getLocation() != null ? currentStage.getLocation().toString(): "Unknown");
-        assetType.setText(asset.getAssetType() != null ? asset.getAssetType().getName() : "Unknown");
+        assetLocation.setText(currentStage.getLocation() != null ? currentStage.getLocation().toString() : "Unassigned");
+
+
 
 
         return view;

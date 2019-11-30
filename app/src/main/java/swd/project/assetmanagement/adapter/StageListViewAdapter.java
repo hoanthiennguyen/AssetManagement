@@ -42,10 +42,12 @@ public class StageListViewAdapter extends BaseAdapter {
         TextView txtFromDate = convertView.findViewById(R.id.txtFromDate);
         TextView txtToDate = convertView.findViewById(R.id.txtToDate);
         TextView txtStatus = convertView.findViewById(R.id.txtStatus);
+        TextView txtLocation = convertView.findViewById(R.id.txtLocation);
         Stage stage = stageList.get(position);
         txtFromDate.setText(stage.getFromDate());
         txtToDate.setText(stage.getToDate() != null ? stage.getToDate() : "Now");
         txtStatus.setText(stage.getStatus());
+        txtLocation.setText(stage.getLocation() != null ? stage.getLocation().toString() : "Unknown");
         return convertView;
     }
 }

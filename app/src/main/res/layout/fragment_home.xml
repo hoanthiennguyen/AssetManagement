@@ -5,14 +5,19 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".HomeFragment">
-    <Button
-        android:drawableLeft="@drawable/ic_photo_camera_black_24dp"
-        android:text="  Scan QR"
-        android:onClick="onClickScanQR"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="140dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+    <LinearLayout
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:drawableLeft="@drawable/ic_photo_camera_black_24dp"
+            android:text="  Scan QR"
+            android:onClick="onClickScanQR"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
 
     <ListView
         android:id="@+id/assetContainer"

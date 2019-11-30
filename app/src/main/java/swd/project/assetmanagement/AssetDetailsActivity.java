@@ -1,8 +1,12 @@
 package swd.project.assetmanagement;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.TypedArrayUtils;
 
+import android.app.Activity;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -14,6 +18,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -22,6 +27,7 @@ import java.util.List;
 import swd.project.assetmanagement.adapter.StageListViewAdapter;
 import swd.project.assetmanagement.model.Asset;
 import swd.project.assetmanagement.model.AssetStatus;
+import swd.project.assetmanagement.model.Location;
 import swd.project.assetmanagement.model.Stage;
 import swd.project.assetmanagement.presenter.AssetDetailsPresenter;
 import swd.project.assetmanagement.presenter.StageListPresenter;
@@ -64,13 +70,14 @@ public class AssetDetailsActivity extends AppCompatActivity implements LoadingVi
         TextView assetName = findViewById(R.id.assetName);
         TextView assetType = findViewById(R.id.assetType);
         TextView assetLocation = findViewById(R.id.assetLocation);
-        currentStage = asset.getCurrentStage();
+        assetName.setText(asset.getName());
+        assetType.setText(asset.getAssetType() != null ? asset.getAssetType().getName() : "Unassigned");
         assetImage.setImageResource(R.drawable.ic_tv_black_24dp);
+        currentStage = asset.getCurrentStage();
         int position = Arrays.asList(items).indexOf(currentStage.getStatus());
         spinnerChangeStatus.setSelection(position);
-        assetName.setText(asset.getName());
-        assetLocation.setText(currentStage.getLocation() != null ? currentStage.getLocation().toString(): "Unknown");
-        assetType.setText(asset.getAssetType() != null ? asset.getAssetType().getName() : "Unknown");
+        assetLocation.setText(currentStage.getLocation() != null ? currentStage.getLocation().toString() : "Unassigned");
+
         spinnerChangeStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -92,13 +99,13 @@ public class AssetDetailsActivity extends AppCompatActivity implements LoadingVi
     }
     public void onClickToggleHistory(View view){
 
-        if(stageListView.getVisibility() == View.GONE){
+        if(stageListView.getVisibility() == View.INVISIBLE){
             stageListView.setVisibility(View.VISIBLE);
             Button btn = (Button) view;
             btn.setText("Hide History");
         }
         else {
-            stageListView.setVisibility(View.GONE);
+            stageListView.setVisibility(View.INVISIBLE);
             Button btn = (Button) view;
             btn.setText("Show History");
         }
@@ -107,13 +114,32 @@ public class AssetDetailsActivity extends AppCompatActivity implements LoadingVi
         finish();
     }
     public void onClickSave(View view){
+        currentStage.setId(0L);
+        currentStage.setFromDate(new Date(System.currentTimeMillis()).toString());
         stageListPresenter.addNewStage(asset.getId(), currentStage);
     }
     public void onClickChangeLocation(View view){
         PopupLocationDialog locationDialog = new PopupLocationDialog(this);
         locationDialog.show(getSupportFragmentManager(),"ChangeLocation");
     }
+    public void onClickBackToHome(View view){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Confirm Dialog")
+                .setMessage("Are you sure want to leave without saving changes?")
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
 
+                    }
+                });
+        builder.create().show();
+    }
     @Override
     public void getAssetDetailsSuccess(Asset asset) {
         this.asset = asset;
@@ -150,9 +176,10 @@ public class AssetDetailsActivity extends AppCompatActivity implements LoadingVi
 
     @Override
     public void onSuccessAddNewStage(Stage stage) {
-        stageList.add(0,stage);
-        stageListViewAdapter.notifyDataSetChanged();
         Toast.makeText(this, "Current stage has been updated", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent();
+        intent.putExtra("updated",true);
+        setResult(Activity.RESULT_OK,intent);
         finish();
     }
 
@@ -162,7 +189,9 @@ public class AssetDetailsActivity extends AppCompatActivity implements LoadingVi
     }
 
     @Override
-    public void processData(String block, String floor, String room) {
-        Toast.makeText(this, block +", " +  floor + ", " + room, Toast.LENGTH_SHORT).show();
+    public void processData(Location selectedLocation) {
+        currentStage.setLocation(selectedLocation);
+        TextView assetLocation = findViewById(R.id.assetLocation);
+        assetLocation.setText( currentStage.getLocation().toString());
     }
 }

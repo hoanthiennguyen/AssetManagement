@@ -1,6 +1,7 @@
 package swd.project.assetmanagement;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -54,15 +55,22 @@ public class HomeFragment extends Fragment implements AssetListView, LoadingView
                 Asset asset = assetList.get(position);
                 Intent intent = new Intent(getActivity(),AssetDetailsActivity.class);
                 intent.putExtra("asset",asset);
-                startActivity(intent);
+                startActivityForResult(intent,200);
             }
         });
         return view;
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == 200 && resultCode == Activity.RESULT_OK && data.getBooleanExtra("updated",false)){
+            assetListPresenter.fetchListAssetFromServer();
+        }
+    }
 
     @Override
     public void onSuccessFetchAssetList(List<Asset> movieArrayList) {
+        assetList.clear();
         assetList.addAll(movieArrayList);
         assetListViewAdapter.notifyDataSetChanged();
     }
