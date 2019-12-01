@@ -15,17 +15,26 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 import java.util.ArrayList;
 import java.util.List;
 
+import swd.project.assetmanagement.adapter.LocationListAdapter;
 import swd.project.assetmanagement.model.Location;
+import swd.project.assetmanagement.presenter.LocationPresenter;
+import swd.project.assetmanagement.view.LocationView;
 
-public class PopupLocationDialog extends AppCompatDialogFragment {
+public class PopupLocationDialog extends AppCompatDialogFragment implements LocationView {
     private HandleData handleData;
     Spinner spinnerBlock, spinnerFloor,spinnerRoom;
-    String block,floor,room;
-    Location selectedLocation;
-    private List<Location> locations;
+    String block,floor;
+    Location selectedLocation,currentLocation;
+    LocationPresenter locationPresenter;
+    private List<Location> locationList;
+    private List<String> blockList,floorList;
+    LocationListAdapter locationAdapter;
+    private ArrayAdapter<String> floorAdapter;
+    private ArrayAdapter<String> blockAdapter;
 
-    public PopupLocationDialog(HandleData handleData) {
+    public PopupLocationDialog(HandleData handleData, Location currentLocation) {
         this.handleData = handleData;
+        this.currentLocation = currentLocation;
     }
 
     @Override
@@ -36,20 +45,45 @@ public class PopupLocationDialog extends AppCompatDialogFragment {
         spinnerBlock = view.findViewById(R.id.spinnerBlock);
         spinnerFloor = view.findViewById(R.id.spinnerFloor);
         spinnerRoom = view.findViewById(R.id.spinnerRoom);
-        String[] blockList = {"A","B","C"};
-        ArrayAdapter<String> blockAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, blockList);
-        spinnerBlock.setAdapter(blockAdapter);
-        String[] floorList = {"1","2","3"};
-        ArrayAdapter<String> floorAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, floorList);
-        spinnerFloor.setAdapter(floorAdapter);
-        String[] roomList = {"101","102","103"};
-        ArrayAdapter<String> roomAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, roomList);
-        spinnerRoom.setAdapter(roomAdapter);
 
+        locationPresenter = new LocationPresenter(this);
+        locationPresenter.fetchAllBlocks();
+        blockList = new ArrayList<>();
+        blockAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, blockList);
+        spinnerBlock.setAdapter(blockAdapter);
+
+        floorList = new ArrayList<>();
+        floorAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, floorList);
+        spinnerFloor.setAdapter(floorAdapter);
+
+        locationList = new ArrayList<>();
+        locationAdapter = new LocationListAdapter(locationList);
+        spinnerRoom.setAdapter(locationAdapter);
+
+        setOnItemSelectedListener();
+        builder.setView(view)
+                .setTitle("Change Location")
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        handleData.processData(selectedLocation);
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+        return builder.create();
+    }
+
+    private void setOnItemSelectedListener() {
         spinnerBlock.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 block = parent.getItemAtPosition(position).toString();
+                locationPresenter.fetchAllFloorsOfBlock(block);
             }
 
             @Override
@@ -61,6 +95,7 @@ public class PopupLocationDialog extends AppCompatDialogFragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 floor = parent.getItemAtPosition(position).toString();
+                locationPresenter.fetchAllLocationsOfBlockAndFloor(block,floor);
             }
 
             @Override
@@ -79,22 +114,29 @@ public class PopupLocationDialog extends AppCompatDialogFragment {
 
             }
         });
-        builder.setView(view)
-                .setTitle("Change Location")
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        handleData.processData(selectedLocation);
-                    }
-                })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-        return builder.create();
     }
+
+    @Override
+    public void onSuccessFetchBlock(List<String> blocks) {
+        blockList.clear();
+        blockList.addAll(blocks);
+        blockAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onSuccessFetchFloorOfBlock(List<String> floors) {
+        floorList.clear();
+        floorList.addAll(floors);
+        floorAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onSuccessFetchRoomsOfBlockAndFloor(List<Location> locations) {
+        locationList.clear();
+        locationList.addAll(locations);
+        locationAdapter.notifyDataSetChanged();
+    }
+
     public interface HandleData{
         void processData(Location location);
     }

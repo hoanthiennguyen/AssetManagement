@@ -11,5 +11,8 @@ public interface ConfigApi {
     String GET_ASSET_STAGES = "assets/{assetId}/stages";
     String CHANGE_ASSET_STAGE = "assets/{assetId}/stages";
     String GET_NOTIFICATIONS = "transfer-request";
+    String GET_ALL_BLOCKS = "blocks";
+    String GET_ALL_FLOOR = "floors";
+    String GET_ALL_LOCATIONS = "locations";
 
 }

@@ -119,7 +119,7 @@ public class AssetDetailsActivity extends AppCompatActivity implements LoadingVi
         stageListPresenter.addNewStage(asset.getId(), currentStage);
     }
     public void onClickChangeLocation(View view){
-        PopupLocationDialog locationDialog = new PopupLocationDialog(this);
+        PopupLocationDialog locationDialog = new PopupLocationDialog(this, currentStage.getLocation());
         locationDialog.show(getSupportFragmentManager(),"ChangeLocation");
     }
     public void onClickBackToHome(View view){
