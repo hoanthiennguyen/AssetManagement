@@ -6,5 +6,6 @@ import swd.project.assetmanagement.api_util.CallbackData;
 import swd.project.assetmanagement.model.TransferRequest;
 
 public interface TransferRequestRepository {
-    void fetchTransferRequestToMe(CallbackData<List<TransferRequest>> callback);
+    void fetchTransferRequestToMe(int employeeId, CallbackData<List<TransferRequest>> callback);
+    void fetchTransferRequestFromMe(int employeeId, CallbackData<List<TransferRequest>> callback);
 }

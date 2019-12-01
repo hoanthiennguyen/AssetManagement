@@ -9,4 +9,6 @@ import swd.project.assetmanagement.dto.ResponseListTransferRequest;
 public interface TransferRequestService {
     @GET(ConfigApi.GET_NOTIFICATIONS)
     Call<ResponseListTransferRequest> getListTransferRequestToMe(@Query("employeeIdParaTo") int employeeIdParaTo);
+    @GET(ConfigApi.GET_NOTIFICATIONS)
+    Call<ResponseListTransferRequest> getListTransferRequestFromMe(@Query("employeeIdParaFrom") int employeeIdParaFrom);
 }

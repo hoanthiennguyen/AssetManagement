@@ -42,8 +42,6 @@ public class NotificationListAdapter extends BaseAdapter {
         TransferRequest transferRequest = notificationList.get(position);
         TextView txtName = view.findViewById(R.id.txtUser);
         TextView txtContent = view.findViewById(R.id.txtContent);
-        String senderName = transferRequest.getSender().getUsername();
-        String receiverName = transferRequest.getReceiver().getUsername();
         return view;
     }
 }

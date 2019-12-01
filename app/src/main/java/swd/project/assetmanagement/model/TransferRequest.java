@@ -2,8 +2,8 @@ package swd.project.assetmanagement.model;
 
 public class TransferRequest {
     Long id;
-    Employee sender;
-    Employee receiver;
+    Employee fromEmployee;
+    Employee toEmployee;
     String createdTime;
     String status;
     Asset asset;
@@ -21,20 +21,20 @@ public class TransferRequest {
         this.id = id;
     }
 
-    public Employee getSender() {
-        return sender;
+    public Employee getFromEmployee() {
+        return fromEmployee;
     }
 
-    public void setSender(Employee sender) {
-        this.sender = sender;
+    public void setFromEmployee(Employee fromEmployee) {
+        this.fromEmployee = fromEmployee;
     }
 
-    public Employee getReceiver() {
-        return receiver;
+    public Employee getToEmployee() {
+        return toEmployee;
     }
 
-    public void setReceiver(Employee receiver) {
-        this.receiver = receiver;
+    public void setToEmployee(Employee toEmployee) {
+        this.toEmployee = toEmployee;
     }
 
     public String getCreatedTime() {

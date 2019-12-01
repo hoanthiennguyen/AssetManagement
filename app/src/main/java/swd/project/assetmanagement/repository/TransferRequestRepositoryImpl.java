@@ -14,8 +14,8 @@ import swd.project.assetmanagement.model.TransferRequest;
 public class TransferRequestRepositoryImpl implements TransferRequestRepository{
     TransferRequestService service = RetrofitConfiguration.getRetrofitAdapter().create(TransferRequestService.class);
     @Override
-    public void fetchTransferRequestToMe(final CallbackData<List<TransferRequest>> callback) {
-        Call<ResponseListTransferRequest> call = service.getListTransferRequestToMe(1);
+    public void fetchTransferRequestToMe(int employeeId, final CallbackData<List<TransferRequest>> callback) {
+        Call<ResponseListTransferRequest> call = service.getListTransferRequestToMe(employeeId);
         call.enqueue(new Callback<ResponseListTransferRequest>() {
             @Override
             public void onResponse(Call<ResponseListTransferRequest> call, Response<ResponseListTransferRequest> response) {
@@ -34,6 +34,31 @@ public class TransferRequestRepositoryImpl implements TransferRequestRepository{
             @Override
             public void onFailure(Call<ResponseListTransferRequest> call, Throwable t) {
                     callback.onFail(t.getMessage());
+            }
+        });
+    }
+
+    @Override
+    public void fetchTransferRequestFromMe(int employeeId,final CallbackData<List<TransferRequest>> callback) {
+        Call<ResponseListTransferRequest> call = service.getListTransferRequestFromMe(employeeId);
+        call.enqueue(new Callback<ResponseListTransferRequest>() {
+            @Override
+            public void onResponse(Call<ResponseListTransferRequest> call, Response<ResponseListTransferRequest> response) {
+                ResponseListTransferRequest dto = response.body();
+                if(dto != null && dto.getStatus().equals(ResponseStatus.OK.toString())){
+                    callback.onSuccess(dto.getPayload());
+                }
+                else {
+                    if(dto != null)
+                        callback.onFail(dto.getStatus());
+                    else
+                        callback.onFail("Internal server error");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseListTransferRequest> call, Throwable t) {
+                callback.onFail(t.getMessage());
             }
         });
     }
