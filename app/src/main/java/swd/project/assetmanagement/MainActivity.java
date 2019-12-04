@@ -1,19 +1,21 @@
 package swd.project.assetmanagement;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager.widget.ViewPager;
-
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
+import android.view.MenuItem;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager.widget.ViewPager;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 
 import in.mrasif.libs.easyqr.EasyQR;
 import in.mrasif.libs.easyqr.QRScanner;
-import swd.project.assetmanagement.adapter.ViewPagerAdapter;
 import swd.project.assetmanagement.api_util.TokenManagement;
 
 public class MainActivity extends AppCompatActivity {
@@ -23,22 +25,43 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        tabLayoutMainMenu = findViewById(R.id.tabLayoutMainMenu);
-        viewPagerMainContent = findViewById(R.id.viewPagerMainContent);
-        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-        viewPagerAdapter.addFragment(new HomeFragment(),"Home");
-        viewPagerAdapter.addFragment(new NotificationFragment(),"Notification");
 
-        viewPagerMainContent.setAdapter(viewPagerAdapter);
-        tabLayoutMainMenu.setupWithViewPager(viewPagerMainContent);
+        // Bottom Navigation
+        BottomNavigationView bottomNavigationView = findViewById(R.id.navigationBar);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        Fragment fragment = new HomeFragment();
+        transaction.replace(R.id.fragContainer,fragment);
+        transaction.commit();
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                Fragment fragment = null;
+                switch (menuItem.getItemId()) {
+                    case R.id.nav_home:
+                        fragment = new HomeFragment();
+                        break;
+                    case R.id.nav_qr:
+                        Intent intent = new Intent(MainActivity.this, QRScanner.class);
+                        startActivityForResult(intent, EasyQR.QR_SCANNER_REQUEST);
+                        return true;
+                    case R.id.nav_request:
+                        fragment = new NotificationFragment();
+                        break;
+                    case R.id.nav_profile:
+                        break;
+                }
+                transaction.replace(R.id.fragContainer, fragment);
+                transaction.commit();
+                return true;
+            }
+        });
+
+        //Token
         TokenManagement.loadAccessToken(this);
 
     }
 
-    public void onClickScanQR(View view) {
-        Intent intent = new Intent(this, QRScanner.class);
-        startActivityForResult(intent, EasyQR.QR_SCANNER_REQUEST);
-    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

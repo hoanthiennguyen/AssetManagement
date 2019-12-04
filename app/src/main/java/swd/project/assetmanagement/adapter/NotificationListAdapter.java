@@ -39,9 +39,23 @@ public class NotificationListAdapter extends BaseAdapter {
             LayoutInflater inflater = LayoutInflater.from(parent.getContext());
             view = inflater.inflate(R.layout.fragment_item_notification, parent, false);
         }
+
         TransferRequest transferRequest = notificationList.get(position);
         TextView txtName = view.findViewById(R.id.txtUser);
         TextView txtContent = view.findViewById(R.id.txtContent);
+        TextView txtDate = view.findViewById(R.id.txtDate);
+        String sender = transferRequest.getFromEmployee().getFullname();
+        String receiver = transferRequest.getToEmployee().getFullname();
+        txtName.setText(receiver);
+        txtContent.setText("Has send a request!");
+        txtDate.setText(transferRequest.getCreatedTime());
         return view;
     }
+
+    /*public boolean isSender(String username, String sender, int position) {
+        if(username.equals(sender)) {
+            return true;
+        }
+        return false;
+    }*/
 }

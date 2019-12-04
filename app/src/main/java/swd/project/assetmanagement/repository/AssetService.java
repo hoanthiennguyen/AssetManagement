@@ -4,6 +4,7 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 import swd.project.assetmanagement.api_util.ConfigApi;
 import swd.project.assetmanagement.dto.ResponseDTO;
 import swd.project.assetmanagement.dto.ResponseListAsset;
@@ -16,5 +17,7 @@ public interface AssetService {
     Call<ResponseDTO> updateAsset(Asset asset);
     @GET(ConfigApi.GET_ASSET)
     Call<ResponseDTO<Asset>> getAsset(@Path("assetId") int assetId);
+    @GET(ConfigApi.GET_ALL_ASSETS)
+    Call<ResponseListAsset> filterAsset(@Query("room") String room, @Query("status") String status, @Query("assetTypeId") Integer assetTypeId);
 
 }

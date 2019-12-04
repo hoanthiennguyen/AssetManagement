@@ -27,6 +27,12 @@
             android:layout_marginLeft="5dp"
             android:textStyle="bold"/>
         <TextView
+            android:id="@+id/txtDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="11/05/2019"
+            android:layout_alignParentRight="true"/>
+        <TextView
             android:id="@+id/txtContent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
