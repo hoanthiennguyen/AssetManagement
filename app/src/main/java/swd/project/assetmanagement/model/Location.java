@@ -61,6 +61,6 @@ public class Location implements Serializable {
     @NonNull
     @Override
     public String toString() {
-        return "Block: " + block + ", room: " + room;
+        return room;
     }
 }

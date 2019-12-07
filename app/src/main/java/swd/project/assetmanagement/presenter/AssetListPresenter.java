@@ -41,6 +41,21 @@ public class AssetListPresenter {
         loadingView.showProgress();
     }
 
+    public void filterAssetFromServer(String room, String status, Long assetTypeId) {
+        assetRepo.fiterAsset(room, status, assetTypeId, new CallbackData<List<Asset>>() {
+            @Override
+            public void onSuccess(List<Asset> assets) {
+                loadingView.hideProgress();
+                assetListView.onSuccessFetchAssetList(assets);
+            }
 
+            @Override
+            public void onFail(String msg) {
+                loadingView.hideProgress();
+                assetListView.onFailureFetchAssetList(msg);
+            }
+        });
+        loadingView.showProgress();
+    }
 
 }

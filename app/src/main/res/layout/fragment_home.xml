@@ -6,7 +6,66 @@
     android:orientation="vertical"
     tools:context=".HomeFragment">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Floor:"
+            android:textStyle="bold"/>
+        <Spinner
+            android:id="@+id/spinnerFloor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Room:"
+            android:textStyle="bold"/>
+        <Spinner
+            android:id="@+id/spinnerRoom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Type:"
+            android:textStyle="bold"/>
+        <Spinner
+            android:id="@+id/spinnerType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Status:"
+            android:textStyle="bold"/>
+        <Spinner
+            android:id="@+id/spinnerStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+    </LinearLayout>
+    <Button
+        android:id="@+id/btnFilter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Filter"/>
     <ListView
         android:id="@+id/assetContainer"
         android:layout_width="match_parent"

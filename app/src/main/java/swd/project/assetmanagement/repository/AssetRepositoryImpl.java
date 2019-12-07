@@ -23,15 +23,15 @@ public class AssetRepositoryImpl implements AssetRepository{
             public void onResponse(Call<ResponseListAsset> call, Response<ResponseListAsset> response) {
                     ResponseListAsset dto = response.body();
                     if(dto != null && dto.getStatus().equals(ResponseStatus.OK.toString())){
-                        List<Asset> list = dto.getPayload();
-                        callBack.onSuccess(list);
-                    }
-                    else{
-                        if(dto != null)
-                            callBack.onFail(dto.getStatus());
-                        else
-                            callBack.onFail("Internal server error");
-                    }
+                    List<Asset> list = dto.getPayload();
+                    callBack.onSuccess(list);
+                }
+                else{
+                    if(dto != null)
+                        callBack.onFail(dto.getStatus());
+                    else
+                        callBack.onFail("Internal server error");
+                }
 
             }
 
@@ -66,6 +66,32 @@ public class AssetRepositoryImpl implements AssetRepository{
             @Override
             public void onFailure(Call<ResponseDTO<Asset>> call, Throwable t) {
 
+            }
+        });
+    }
+
+    @Override
+    public void fiterAsset(String room, String status, Long assetTypeId, final CallbackData<List<Asset>> callBack) {
+        Call<ResponseListAsset> call = assetService.filterAsset(room, status, assetTypeId);
+        call.enqueue(new Callback<ResponseListAsset>() {
+            @Override
+            public void onResponse(Call<ResponseListAsset> call, Response<ResponseListAsset> response) {
+                ResponseListAsset dto = response.body();
+                if(dto != null && dto.getStatus().equals(ResponseStatus.OK.toString())){
+                    List<Asset> list = dto.getPayload();
+                    callBack.onSuccess(list);
+                }
+                else{
+                    if(dto != null)
+                        callBack.onFail(dto.getStatus());
+                    else
+                        callBack.onFail("Internal server error");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseListAsset> call, Throwable t) {
+                callBack.onFail(t.getMessage());
             }
         });
     }

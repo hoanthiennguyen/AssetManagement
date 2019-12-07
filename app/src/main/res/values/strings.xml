@@ -3,4 +3,13 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string-array name="status">
+        <item>Choose Status</item>
+        <item>CREATED</item>
+        <item>STABLE</item>
+        <item>DAMAGED</item>
+        <item>EXPIRED</item>
+        <item>REMOVED</item>
+        <item>REPAIRING</item>
+    </string-array>
 </resources>

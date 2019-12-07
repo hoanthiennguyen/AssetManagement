@@ -14,5 +14,5 @@ public interface ConfigApi {
     String GET_ALL_BLOCKS = "blocks";
     String GET_ALL_FLOOR = "floors";
     String GET_ALL_LOCATIONS = "locations";
-
+    String GET_ASSET_TYPE = "asset-types";
 }

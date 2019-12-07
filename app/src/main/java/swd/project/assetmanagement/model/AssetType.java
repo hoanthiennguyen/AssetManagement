@@ -1,5 +1,7 @@
 package swd.project.assetmanagement.model;
 
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 
 public class AssetType implements Serializable {
@@ -41,5 +43,11 @@ public class AssetType implements Serializable {
 
     public void setDepartment(Department department) {
         this.department = department;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return name;
     }
 }

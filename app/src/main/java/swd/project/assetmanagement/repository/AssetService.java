@@ -18,6 +18,5 @@ public interface AssetService {
     @GET(ConfigApi.GET_ASSET)
     Call<ResponseDTO<Asset>> getAsset(@Path("assetId") int assetId);
     @GET(ConfigApi.GET_ALL_ASSETS)
-    Call<ResponseListAsset> filterAsset(@Query("room") String room, @Query("status") String status, @Query("assetTypeId") Integer assetTypeId);
-
+    Call<ResponseListAsset> filterAsset(@Query("room") String room, @Query("status") String status, @Query("assetTypeId") Long assetTypeId);
 }
