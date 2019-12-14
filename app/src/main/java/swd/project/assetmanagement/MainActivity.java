@@ -17,10 +17,11 @@ import com.google.android.material.tabs.TabLayout;
 import in.mrasif.libs.easyqr.EasyQR;
 import in.mrasif.libs.easyqr.QRScanner;
 import swd.project.assetmanagement.api_util.TokenManagement;
+import swd.project.assetmanagement.model.Employee;
+import swd.project.assetmanagement.model.LoginDTO;
 
 public class MainActivity extends AppCompatActivity {
-    TabLayout tabLayoutMainMenu;
-    ViewPager viewPagerMainContent;
+    LoginDTO employee;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
                         fragment = new NotificationFragment();
                         break;
                     case R.id.nav_profile:
+                        fragment = new EmployeeFragment();
                         break;
                 }
                 transaction.replace(R.id.fragContainer, fragment);
@@ -60,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
         //Token
         TokenManagement.loadAccessToken(this);
 
+        Intent intent = getIntent();
+        employee = (LoginDTO) intent.getSerializableExtra("employee");
     }
 
     @Override
@@ -83,5 +87,9 @@ public class MainActivity extends AppCompatActivity {
                 //handle cancel
             }
         }
+    }
+
+    public LoginDTO getEmployee() {
+        return employee;
     }
 }

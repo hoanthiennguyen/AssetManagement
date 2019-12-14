@@ -8,4 +8,6 @@ import swd.project.assetmanagement.model.TransferRequest;
 public interface TransferRequestRepository {
     void fetchTransferRequestToMe(int employeeId, CallbackData<List<TransferRequest>> callback);
     void fetchTransferRequestFromMe(int employeeId, CallbackData<List<TransferRequest>> callback);
+    void CreateTransfer(TransferRequest transferRequest, CallbackData<TransferRequest> callBack);
+    void editTransfer(long requestId, TransferRequest transferRequest, CallbackData<TransferRequest> callBack);
 }

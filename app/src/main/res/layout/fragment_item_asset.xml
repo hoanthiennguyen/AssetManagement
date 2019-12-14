@@ -23,8 +23,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Tivi Samsung"
+            android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold"
+            android:layout_toRightOf="@+id/assetImage"/>
+        <TextView
+            android:id="@+id/s1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Type: "
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:layout_below="@+id/assetName"
             android:layout_toRightOf="@+id/assetImage"/>
         <TextView
             android:id="@+id/assetType"
@@ -33,24 +43,35 @@
             android:text="Tivi"
             android:textSize="16sp"
             android:layout_below="@+id/assetName"
+            android:layout_toRightOf="@+id/s1"/>
+        <TextView
+            android:id="@+id/s2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Room: "
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:layout_below="@+id/assetType"
             android:layout_toRightOf="@+id/assetImage"/>
         <TextView
             android:id="@+id/assetLocation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Room 216"
+            android:text="216"
             android:textSize="16sp"
             android:layout_below="@+id/assetType"
-            android:layout_toRightOf="@+id/assetImage"/>
+            android:layout_toRightOf="@+id/s2"/>
+
         <TextView
             android:id="@+id/assetStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Active"
+            android:textStyle="bold"
+            android:textSize="16sp"
             android:layout_alignParentRight="true"
             android:gravity="center"
             android:layout_centerVertical="true"
-            android:background="#46FF00"
             android:layout_marginRight="5dp"/>
     </RelativeLayout>
 

@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".NotificationFragment">
+    tools:context=".NotificationFragment"
+    android:background="@color/frame_background">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
@@ -14,24 +15,41 @@
         android:gravity="center"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:textColor="@color/broken"/>
+        android:textColor="@color/white"
+        android:background="@color/background_color"/>
     <TextView
-        android:text="To You"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:text="To You:"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:background="@color/white"/>
     <ListView
+        android:layout_marginTop="5dp"
         android:layout_weight="3"
         android:id="@+id/notificationToMeContainer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"/>
     <TextView
-        android:text="From You"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:text="From You:"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:background="@color/white"/>
     <ListView
+        android:layout_marginTop="5dp"
         android:layout_weight="3"
         android:id="@+id/notificationFromMeContainer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"/>
 
 </LinearLayout>

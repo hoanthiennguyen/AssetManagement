@@ -7,8 +7,11 @@ public class TransferRequest {
     String createdTime;
     String status;
     Asset asset;
-    boolean isSeenByReceiver;
-    boolean isSeenBySender;
+    Firm firm;
+    boolean seenByReceiver;
+    boolean seenBySender;
+    String message;
+    boolean close;
 
     public TransferRequest() {
     }
@@ -61,19 +64,43 @@ public class TransferRequest {
         this.asset = asset;
     }
 
+    public Firm getFirm() {
+        return firm;
+    }
+
+    public void setFirm(Firm firm) {
+        this.firm = firm;
+    }
+
     public boolean isSeenByReceiver() {
-        return isSeenByReceiver;
+        return seenByReceiver;
     }
 
     public void setSeenByReceiver(boolean seenByReceiver) {
-        isSeenByReceiver = seenByReceiver;
+        this.seenByReceiver = seenByReceiver;
     }
 
     public boolean isSeenBySender() {
-        return isSeenBySender;
+        return seenBySender;
     }
 
     public void setSeenBySender(boolean seenBySender) {
-        isSeenBySender = seenBySender;
+        this.seenBySender = seenBySender;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public boolean isClose() {
+        return close;
+    }
+
+    public void setClose(boolean close) {
+        this.close = close;
     }
 }

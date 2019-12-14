@@ -12,11 +12,11 @@ import swd.project.assetmanagement.model.Asset;
 
 public interface AssetService {
     @GET(ConfigApi.GET_ALL_ASSETS)
-    Call<ResponseListAsset> getAllAsset();
+    Call<ResponseListAsset> getAllAsset(@Query("employeeId") int employeeId);
     @PUT(ConfigApi.EDIT_ASSET)
     Call<ResponseDTO> updateAsset(Asset asset);
     @GET(ConfigApi.GET_ASSET)
     Call<ResponseDTO<Asset>> getAsset(@Path("assetId") int assetId);
     @GET(ConfigApi.GET_ALL_ASSETS)
-    Call<ResponseListAsset> filterAsset(@Query("room") String room, @Query("status") String status, @Query("assetTypeId") Long assetTypeId);
+    Call<ResponseListAsset> filterAsset(@Query("employeeId") int employeeId, @Query("room") String room, @Query("status") String status, @Query("assetTypeId") Long assetTypeId);
 }

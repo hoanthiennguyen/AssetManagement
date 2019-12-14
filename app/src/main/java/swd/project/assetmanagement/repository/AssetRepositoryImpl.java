@@ -15,9 +15,9 @@ import swd.project.assetmanagement.model.Asset;
 public class AssetRepositoryImpl implements AssetRepository{
     AssetService assetService = RetrofitConfiguration.getRetrofitAdapter().create(AssetService.class);
     @Override
-    public void fetchListAsset(final CallbackData<List<Asset>> callBack) {
+    public void fetchListAsset(int employeeId, final CallbackData<List<Asset>> callBack) {
 
-        Call<ResponseListAsset> call = assetService.getAllAsset();
+        Call<ResponseListAsset> call = assetService.getAllAsset(employeeId);
         call.enqueue(new Callback<ResponseListAsset>() {
             @Override
             public void onResponse(Call<ResponseListAsset> call, Response<ResponseListAsset> response) {
@@ -71,8 +71,8 @@ public class AssetRepositoryImpl implements AssetRepository{
     }
 
     @Override
-    public void fiterAsset(String room, String status, Long assetTypeId, final CallbackData<List<Asset>> callBack) {
-        Call<ResponseListAsset> call = assetService.filterAsset(room, status, assetTypeId);
+    public void fiterAsset(int employeeId, String room, String status, Long assetTypeId, final CallbackData<List<Asset>> callBack) {
+        Call<ResponseListAsset> call = assetService.filterAsset(employeeId, room, status, assetTypeId);
         call.enqueue(new Callback<ResponseListAsset>() {
             @Override
             public void onResponse(Call<ResponseListAsset> call, Response<ResponseListAsset> response) {

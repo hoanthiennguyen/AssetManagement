@@ -24,6 +24,7 @@ import swd.project.assetmanagement.adapter.AssetListViewAdapter;
 import swd.project.assetmanagement.model.Asset;
 import swd.project.assetmanagement.model.AssetType;
 import swd.project.assetmanagement.model.Location;
+import swd.project.assetmanagement.model.LoginDTO;
 import swd.project.assetmanagement.presenter.AssetListPresenter;
 import swd.project.assetmanagement.presenter.AssetTypeListPresenter;
 import swd.project.assetmanagement.presenter.LocationPresenter;
@@ -55,6 +56,7 @@ public class HomeFragment extends Fragment implements AssetListView, LoadingView
     Button btnFilter;
     String room, status;
     Long assetTypeId;
+    LoginDTO employee;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -65,18 +67,23 @@ public class HomeFragment extends Fragment implements AssetListView, LoadingView
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_home, container, false);
+        MainActivity mainActivity = (MainActivity) view.getContext();
+
+        employee = mainActivity.employee;
         listViewAsset = view.findViewById(R.id.assetContainer);
         assetListPresenter = new AssetListPresenter(this,this);
         assetList = new ArrayList<>();
         assetListViewAdapter = new AssetListViewAdapter(assetList);
         listViewAsset.setAdapter(assetListViewAdapter);
-        assetListPresenter.fetchListAssetFromServer();
+        assetListPresenter.fetchListAssetFromServer(employee.getEmployee().getId());
+
         listViewAsset.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Asset asset = assetList.get(position);
                 Intent intent = new Intent(getActivity(),AssetDetailsActivity.class);
                 intent.putExtra("asset",asset);
+                intent.putExtra("employee",employee);
                 startActivityForResult(intent,200);
             }
         });
@@ -119,7 +126,7 @@ public class HomeFragment extends Fragment implements AssetListView, LoadingView
         btnFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                assetListPresenter.filterAssetFromServer(room, status, assetTypeId);
+                assetListPresenter.filterAssetFromServer(employee.getEmployee().getId(), room, status, assetTypeId);
             }
         });
         return view;
@@ -128,7 +135,7 @@ public class HomeFragment extends Fragment implements AssetListView, LoadingView
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == 200 && resultCode == Activity.RESULT_OK && data.getBooleanExtra("updated",false)){
-            assetListPresenter.fetchListAssetFromServer();
+            assetListPresenter.fetchListAssetFromServer(employee.getEmployee().getId());
         }
     }
 
@@ -205,7 +212,6 @@ public class HomeFragment extends Fragment implements AssetListView, LoadingView
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String floor = (String) adapterView.getSelectedItem();
                 if(i == 0) {
-                    Toast.makeText(view.getContext(), "Please Select Floor!", Toast.LENGTH_SHORT).show();
                     sRoom.setEnabled(false);
                 }else {
                     sRoom.setEnabled(true);

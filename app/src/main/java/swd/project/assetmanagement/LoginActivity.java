@@ -1,8 +1,6 @@
 package swd.project.assetmanagement;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +8,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -19,13 +20,19 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
+import swd.project.assetmanagement.api_util.CallbackData;
+import swd.project.assetmanagement.model.LoginDTO;
+import swd.project.assetmanagement.repository.AuthRepositoryImpl;
+
 public class LoginActivity extends AppCompatActivity {
     EditText txtUsername, txtPassword;
     Button loginGG;
+    ProgressDialog progressDialog;
 
     private FirebaseAuth mAuth;
     private GoogleSignInClient signInClient;
     private int RC_SIGN_IN = 0;
+    private AuthRepositoryImpl authRepo = new AuthRepositoryImpl();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,15 +55,19 @@ public class LoginActivity extends AppCompatActivity {
                 signIn();
             }
         });
+        progressDialog = new ProgressDialog(LoginActivity.this,
+                R.style.Theme_AppCompat_DayNight_Dialog);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("Waiting...");
     }
 
     public void clickToLogin(View view) {
-        String username = txtUsername.getText().toString();
-        String password = txtPassword.getText().toString();
-        if(checkLogin(username, password)) {
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(intent);
-        }
+//        String username = txtUsername.getText().toString();
+//        String password = txtPassword.getText().toString();
+//        if(checkLogin(username, password)) {
+//                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+//                startActivity(intent);
+//        }
     }
 
     public void clickToRegister(View view) {
@@ -68,7 +79,7 @@ public class LoginActivity extends AppCompatActivity {
         if(username.isEmpty() || password.isEmpty()) {
             Toast.makeText(LoginActivity.this, "Please input Username or Password!!!", Toast.LENGTH_SHORT).show();
             return false;
-        }else if(username.matches("xcuong") && password.matches("123456")) {
+                }else if(username.matches("xcuong") && password.matches("123456")) {
             return true;
         }
         return false;
@@ -79,10 +90,22 @@ public class LoginActivity extends AppCompatActivity {
         //check login before
         GoogleSignInAccount currentUser = GoogleSignIn.getLastSignedInAccount(LoginActivity.this);
         if(currentUser != null) {
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            //intent.putExtra("userName", currentUser.getDisplayName());
-            //intent.putExtra("userEmail", currentUser.getEmail());
-            startActivity(intent);
+            progressDialog.show();
+            authRepo.loginByGG(currentUser.getIdToken(), new CallbackData<LoginDTO>() {
+                @Override
+                public void onSuccess(LoginDTO employee) {
+                    progressDialog.dismiss();
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    intent.putExtra("employee", employee);
+                    startActivity(intent);
+                    finish();
+                }
+
+                @Override
+                public void onFail(String msg) {
+
+                }
+            });
         }
         super.onStart();
     }
@@ -105,10 +128,22 @@ public class LoginActivity extends AppCompatActivity {
     private void handleSignInResult(Task<GoogleSignInAccount> completeTask) {
         try {
             GoogleSignInAccount account = completeTask.getResult(ApiException.class);
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            //intent.putExtra("userName", account.getDisplayName());
-            //intent.putExtra("userEmail", account.getEmail());
-            startActivity(intent);
+            progressDialog.show();
+            authRepo.loginByGG(account.getIdToken(), new CallbackData<LoginDTO>() {
+                @Override
+                public void onSuccess(LoginDTO employee) {
+                    progressDialog.dismiss();
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    intent.putExtra("employee", employee);
+                    startActivity(intent);
+                    finish();
+                }
+
+                @Override
+                public void onFail(String msg) {
+
+                }
+            });
         }catch (ApiException e) {
             Toast.makeText(this, "Error!!!", Toast.LENGTH_SHORT).show();
             Log.w("MainActivity", "signInResult: failed code=" +e.getStatusCode());

@@ -1,5 +1,6 @@
 package swd.project.assetmanagement.adapter;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,10 +12,10 @@ import java.util.List;
 import swd.project.assetmanagement.R;
 import swd.project.assetmanagement.model.TransferRequest;
 
-public class NotificationListAdapter extends BaseAdapter {
+public class NotificationListToMeAdapter extends BaseAdapter {
     List<TransferRequest> notificationList;
 
-    public NotificationListAdapter(List<TransferRequest> notificationList) {
+    public NotificationListToMeAdapter(List<TransferRequest> notificationList) {
         this.notificationList = notificationList;
     }
 
@@ -44,18 +45,21 @@ public class NotificationListAdapter extends BaseAdapter {
         TextView txtName = view.findViewById(R.id.txtUser);
         TextView txtContent = view.findViewById(R.id.txtContent);
         TextView txtDate = view.findViewById(R.id.txtDate);
-        String sender = transferRequest.getFromEmployee().getFullname();
-        String receiver = transferRequest.getToEmployee().getFullname();
-        txtName.setText(receiver);
-        txtContent.setText("Has send a request!");
+        TextView txtStatus = view.findViewById(R.id.txtStatus);
+
+        txtName.setText(transferRequest.getFromEmployee().getFullName());
         txtDate.setText(transferRequest.getCreatedTime());
+        if(transferRequest.getStatus().equals("PENDING")) {
+            txtContent.setText("has transfer " + transferRequest.getAsset().getName() + " to you.");
+        }else if(transferRequest.getStatus().equals("APPROVED") && transferRequest.isSeenByReceiver()) {
+            txtContent.setText("You had APPROVED " + transferRequest.getFromEmployee().getFullName() + "'s transfer a " + transferRequest.getAsset().getName() + ".");
+            txtStatus.setText("APPROVED");
+            txtStatus.setTextColor(Color.parseColor("#46FF00"));
+        }else if(transferRequest.getStatus().equals("DENIED") && transferRequest.isSeenByReceiver()) {
+            txtContent.setText("You had DENIED " + transferRequest.getFromEmployee().getFullName() + "'s transfer a " + transferRequest.getAsset().getName() + ".");
+            txtStatus.setText("DENIED");
+            txtStatus.setTextColor(Color.parseColor("#FF0000"));
+        }
         return view;
     }
-
-    /*public boolean isSender(String username, String sender, int position) {
-        if(username.equals(sender)) {
-            return true;
-        }
-        return false;
-    }*/
 }

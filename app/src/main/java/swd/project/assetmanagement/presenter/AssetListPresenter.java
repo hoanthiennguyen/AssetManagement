@@ -24,8 +24,8 @@ public class AssetListPresenter {
         this.loadingView = loadingView;
     }
 
-    public void fetchListAssetFromServer() {
-        assetRepo.fetchListAsset(new CallbackData<List<Asset>>() {
+    public void fetchListAssetFromServer(int employeeId) {
+        assetRepo.fetchListAsset(employeeId, new CallbackData<List<Asset>>() {
             @Override
             public void onSuccess(List<Asset> assetList) {
                 loadingView.hideProgress();
@@ -41,8 +41,8 @@ public class AssetListPresenter {
         loadingView.showProgress();
     }
 
-    public void filterAssetFromServer(String room, String status, Long assetTypeId) {
-        assetRepo.fiterAsset(room, status, assetTypeId, new CallbackData<List<Asset>>() {
+    public void filterAssetFromServer(int employeeId, String room, String status, Long assetTypeId) {
+        assetRepo.fiterAsset(employeeId, room, status, assetTypeId, new CallbackData<List<Asset>>() {
             @Override
             public void onSuccess(List<Asset> assets) {
                 loadingView.hideProgress();
