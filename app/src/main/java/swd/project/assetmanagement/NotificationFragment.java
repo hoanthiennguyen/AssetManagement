@@ -23,7 +23,6 @@ import swd.project.assetmanagement.model.LoginDTO;
 import swd.project.assetmanagement.model.Stage;
 import swd.project.assetmanagement.model.TransferRequest;
 import swd.project.assetmanagement.presenter.TransferRequestPresenter;
-import swd.project.assetmanagement.repository.StageRepositoryImpl;
 import swd.project.assetmanagement.repository.TransferRequestRepositoryImpl;
 import swd.project.assetmanagement.view.TransferRequestListView;
 
@@ -41,7 +40,6 @@ public class NotificationFragment extends Fragment implements TransferRequestLis
     private NotificationListFromMeAdapter adapterFromMe;
     LoginDTO employee;
     TransferRequestRepositoryImpl transferRepo = new TransferRequestRepositoryImpl();
-    StageRepositoryImpl stageRepo = new StageRepositoryImpl();
 
 
     public NotificationFragment() {
@@ -82,11 +80,7 @@ public class NotificationFragment extends Fragment implements TransferRequestLis
                         public void onClick(DialogInterface dialogInterface, int i) {
                             request.setStatus("APPROVED");
                             request.setSeenByReceiver(true);
-//                        stage.setEmployee(request.getToEmployee());
-//                        stage.setPreviousEmployee(request.getFromEmployee());
-
                             updateTransfer(request.getId(), request, "APPROVED");
-//                        updateStage(request.getAsset().getId(), stage, "APPROVED");
                         }
                     });
                     builder.setNegativeButton("Deny", new DialogInterface.OnClickListener() {
@@ -148,22 +142,4 @@ public class NotificationFragment extends Fragment implements TransferRequestLis
             }
         });
     }
-
-//    public void updateStage(int assetId, Stage stage, final String status) {
-//        stageRepo.addNewStage(assetId, stage, new CallbackData<Stage>() {
-//            @Override
-//            public void onSuccess(Stage stage) {
-//                if(stage != null){
-//                    Toast.makeText(getContext(), status + " success!!!", Toast.LENGTH_LONG).show();
-//                }else {
-//                    Toast.makeText(getContext(), status + " fail!!!", Toast.LENGTH_LONG).show();
-//                }
-//            }
-//
-//            @Override
-//            public void onFail(String msg) {
-//
-//            }
-//        });
-//    }
 }

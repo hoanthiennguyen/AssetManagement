@@ -44,7 +44,7 @@
             android:textColor="@color/prepair"/>
         <TextView
             android:id="@+id/txtContent"
-            android:layout_width="280dp"
+            android:layout_width="160dp"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/notificationImage"
             android:layout_below="@+id/txtUser"

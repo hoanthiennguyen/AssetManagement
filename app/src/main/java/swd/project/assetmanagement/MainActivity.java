@@ -9,15 +9,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.tabs.TabLayout;
 
 import in.mrasif.libs.easyqr.EasyQR;
 import in.mrasif.libs.easyqr.QRScanner;
 import swd.project.assetmanagement.api_util.TokenManagement;
-import swd.project.assetmanagement.model.Employee;
 import swd.project.assetmanagement.model.LoginDTO;
 
 public class MainActivity extends AppCompatActivity {
@@ -77,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
                     String assetId = data.getStringExtra(EasyQR.DATA);
                     Intent intent = new Intent(this,AssetDetailsActivity.class);
                     intent.putExtra("assetId",Integer.parseInt(assetId));
+                    intent.putExtra("employee", employee);
                     startActivity(intent);
                 }
                 catch (Exception e){
